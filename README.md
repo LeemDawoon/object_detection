@@ -1,6 +1,6 @@
 # Object Detection
 * 기존 [fizyr/keras-retinanet](https://github.com/fizyr/keras-retinanet) 코드를 수정하여, tensorflow 2.1.0 버전에서 사용할 수 있도록 수정.
-
+* ![result](figure.JPG)
 ## Dataset
 * **[Vehicle Number Plate](https://www.kaggle.com/dataturks/vehicle-number-plate-detection)**
 * 위에서 받은 json 파일을 원하는 경로에 넣어 넣어 준다.
