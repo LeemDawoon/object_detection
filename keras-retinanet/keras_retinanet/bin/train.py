@@ -174,11 +174,11 @@ def create_callbacks(model, training_model, prediction_model, validation_generat
         checkpoint = keras.callbacks.ModelCheckpoint(
             os.path.join(args.snapshot_path, '{backbone}_{dataset_type}_{{epoch:02d}}_{{val_loss:.3f}}.h5'.format(backbone=args.backbone, dataset_type=args.dataset_type)),
             verbose=1,
-            # save_best_only=True,
-            # monitor="mAP",
-            # mode='max'
-            monitor="val_loss",
-            mode='min',
+            save_best_only=True,
+            monitor="mAP",
+            mode='max',
+#             monitor="val_loss",
+#             mode='min',
             save_weights_only=False,
         )
         checkpoint = RedirectModel(checkpoint, model)
@@ -195,8 +195,8 @@ def create_callbacks(model, training_model, prediction_model, validation_generat
         min_lr     = 0
     ))
 
-    # if args.tensorboard_dir:
-    #     callbacks.append(tensorboard_callback)
+    if args.tensorboard_dir:
+        callbacks.append(tensorboard_callback)
 
     return callbacks
 
@@ -484,8 +484,6 @@ def main(args=None):
         args,
     )
 
-    # if not args.compute_val_loss:
-    #     validation_generator = None
     print('==> len(train_generator)', len(train_generator))
     print('==> len(validation_generator)', len(validation_generator))
     print('==> int(len(train_generator)//args.batch_size)', int(len(train_generator)//args.batch_size))
@@ -493,7 +491,6 @@ def main(args=None):
     # start training
     return training_model.fit_generator(
         train_generator,
-        # steps_per_epoch=args.steps,
         steps_per_epoch=int(len(train_generator)//args.batch_size),
         epochs=args.epochs,
         verbose=1,
